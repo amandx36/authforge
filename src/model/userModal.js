@@ -19,6 +19,8 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    verifiedToken: String,
+    verifiedTokenExpire: Date ,
     isAdmin: {
         type: Boolean,
         default: false,
