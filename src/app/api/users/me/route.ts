@@ -1,10 +1,15 @@
 import {getDataFromToken} from  '@/helper/getDataFromToken'
 import { NextRequest, NextResponse } from 'next/server'
 import User from "@/model/userModal"
+import {connect} from "@/app/dbConfig/dbConfig"
 
+
+
+connect();
 export async  function GET (request :NextRequest){
+
     try {
-        const tokenData : any = getDataFromToken(request);
+        const tokenData : any = await  getDataFromToken(request);
         const user = await User.findById(tokenData.id).select("-password");
         if(!user){
             return NextResponse.json(
