@@ -2,16 +2,41 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/navigation"
+
 
 export default function LoginPage() {
+
+
+const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
+  const  handleLogin =  async () => {
     console.log("Email:", email);
     console.log("Password:", password);
+  
 
-    // API call will go here later
+    // API call
+    try{
+      const response = await axios.post(
+        "/api/users/login",{
+          email,
+          password,
+        }
+      )
+      console.log(response.data);
+      router.push("/profile")
+      
+
+    }
+    catch(error){
+      console.log("Error Occurred") ; 
+      console.log(error);
+      
+
+    }
   };
 
   return (
@@ -54,7 +79,7 @@ export default function LoginPage() {
         </button>
 
         <Link href="/signup" className="btn btn-success w-100">
-          Create Account
+          Create Account 
         </Link>
 
       </div>

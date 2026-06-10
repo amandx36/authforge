@@ -5,7 +5,7 @@ import User from "@/model/userModal"
 export async  function GET (request :NextRequest){
     try {
         const tokenData : any = getDataFromToken(request);
-        const user = await User.findOne(tokenData.id).select("-password");
+        const user = await User.findById(tokenData.id).select("-password");
         if(!user){
             return NextResponse.json(
                 {
