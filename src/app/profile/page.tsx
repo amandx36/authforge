@@ -2,6 +2,7 @@
 
 import { useState , useEffect} from "react"
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 
 type User = {
@@ -9,7 +10,9 @@ type User = {
     [key: string]: any;
 };
 
+
 export default function Profile (){
+    const router = useRouter();
      
     const [user, setUser] = useState<User | null>(null);
 
@@ -36,7 +39,18 @@ export default function Profile (){
     },[]);
 
 
+const logOutHandler  = async  ()=>{
+    try{
+    const response = await axios.post("/api/users/logout")
 
+    console.log(response);
+    router.push("/login")
+    }
+    catch(error){
+        console.log("Error in the api")
+    }
+
+}
 
 
 
@@ -65,6 +79,10 @@ console.log(user);
             {user?.isAdmin ? "Yes" : "No"}
         </p>
     </div>
+
+
+        <button className="bg-red-500 text-white mx-auto mt-4 block px-4 py-2 rounded"  onClick={logOutHandler}>Log out</button>
+
 </div>
 
 
