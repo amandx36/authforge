@@ -9,12 +9,13 @@ export async function POST(request: NextRequest) {
 
         const reqBody = await request.json();
         const { token } = reqBody;
+        console.log("token found")
 
         const user = await User.findOne({
             verifyToken: token,
-            verifyTokenExpire: { $gt: Date.now() },
+            verifyTokenExpire: { $gt: new Date() },
         });
-
+        
         if (!user) {
             return NextResponse.json(
                 {
@@ -25,7 +26,7 @@ export async function POST(request: NextRequest) {
                 }
             );
         }
-
+        console.log("User found")
         user.isVerified = true;
         user.verifyToken = undefined;
         user.verifyTokenExpire = undefined;

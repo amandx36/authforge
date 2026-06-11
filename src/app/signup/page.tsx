@@ -4,7 +4,6 @@ import axios from "axios";
 import Link from "next/link";
 
 
-
 import { useRouter } from "next/navigation";
 
 
@@ -47,7 +46,7 @@ export default function SignupPage() {
       console.log("Signup successful",);
       // move the user to login page 
       router.push("/login");
-
+      
    } catch (error) {
     console.log(error);
     console.log("Signup failed",);

@@ -2,6 +2,7 @@
 import {connect} from "@/app/dbConfig/dbConfig";
 import User from "@/model/userModal";
 
+import { sendVerificationEmail } from "@/helper/mailer"
 
 // for request and response 
 
@@ -39,12 +40,13 @@ try {
     })
     await newUser.save();
     console.log("User created successfully",newUser);
-    return NextResponse.json({
-        message: "User created successfully",
-        success:true,
-        newUser
-    })
     
+   const res = await sendVerificationEmail(newUser._id,newUser.email);
+    console.log(res);
+    return NextResponse.json({
+    success: true,
+    message: "User created successfully. Verification email sent.",
+});
 
 }
 catch (error:any ) {
