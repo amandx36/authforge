@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import jwt from "jsonwebtoken";
+import { jwtVerify } from "jose";
 
 export const config = {
   matcher: [
@@ -22,6 +22,7 @@ const publicRoutes = [
 export async function middleware(
   request: NextRequest
 ) {
+
   const path = request.nextUrl.pathname;
 
   const isPublicPath =
@@ -34,16 +35,38 @@ export async function middleware(
 
   try {
     if (token) {
-      decoded_data = jwt.verify(
+      const secret = new TextEncoder().encode(
+        process.env.TOKEN_SECRET
+      );
+
+      const { payload } = await jwtVerify(
         token,
-        process.env.TOKEN_SECRET!
+        secret
+      );
+
+      decoded_data = payload;
+
+      console.log(
+        "DECODED_DATA:",
+        decoded_data
       );
     }
   } catch (error) {
+    console.error(
+      "JWT VERIFY ERROR:",
+      error
+    );
+
     decoded_data = null;
   }
 
-  // if login user want to regin login 
+  console.log("PATH:", path);
+  console.log(
+    "ROLE:",
+    decoded_data?.role
+  );
+
+  // force logged in user do not  move to  login again
   if (
     isPublicPath &&
     decoded_data?.role === "USER"
@@ -53,6 +76,7 @@ export async function middleware(
     );
   }
 
+  // force logged in admin not go to profile  and signed up 
   if (
     isPublicPath &&
     decoded_data?.role === "ADMIN"
@@ -65,14 +89,14 @@ export async function middleware(
     );
   }
 
-  // if no token and not a  public route 
+  // No token
   if (!isPublicPath && !token) {
     return NextResponse.redirect(
       new URL("/login", request.url)
     );
   }
 
-  // prevent user from admin access
+  // prevent non admin go to admin route 
   if (
     path.startsWith("/admin") &&
     decoded_data?.role !== "ADMIN"

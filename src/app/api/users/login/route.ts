@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
       sameSite: "lax",
       path: "/",
     });
-
+    console.log(tokenData)
     return response;
   } catch (error: any) {
     return NextResponse.json(
