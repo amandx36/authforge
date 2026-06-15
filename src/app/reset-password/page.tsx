@@ -40,7 +40,7 @@ const handleResetPassword = async (
     alert("password updated successfully redirecting to log in ")
     router.push("/login")
 
-  } catch (error) {
+  } catch (error:any) {
     console.log(error);
 
   } finally {
