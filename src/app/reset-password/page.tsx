@@ -2,6 +2,7 @@
 import axios from "axios";
 import {  useState } from "react"
 import { useSearchParams,useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 export default function ResetPassword(){
     const [password,setPassword] = useState("");
     const [confirmPassword,setConfirmPassword] = useState("");
@@ -39,7 +40,7 @@ const handleResetPassword = async (
     console.log(response.data);
     alert("password updated successfully redirecting to log in ")
     router.push("/login")
-
+    toast.success("Success")
   } catch (error:any) {
     console.log(error);
 

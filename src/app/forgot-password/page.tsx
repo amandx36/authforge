@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast"
 
 export default function ForgotPassword() {
   const [loading, setLoading] = useState(false);
@@ -26,6 +27,7 @@ export default function ForgotPassword() {
 
       setSuccess(true);
       setMessage(response.data.message);
+      toast.success("Success");
 
     } catch (error: any) {
       console.log(error);
