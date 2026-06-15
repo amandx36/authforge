@@ -13,7 +13,7 @@ export default function VerifyEmail() {
       setLoading(true);
 
       const response = await axios.post(
-        "/api/users/verify-email",
+        "/api/users/",
         {
           email,
         }

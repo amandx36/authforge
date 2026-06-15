@@ -1,37 +1,59 @@
-import User from "@/model/userModal";
-import { randomBytes } from "crypto";
 import { Resend } from "resend";
+import { MailTypes } from "./enums";
 
-export async function sendVerificationEmail(_id: any, email: any) {
-    const resendApiKey = process.env.RESEND_API_KEY || process.env.RESEND_API;
-    if (!resendApiKey) {
-        throw new Error("Missing Resend API key. Set RESEND_API_KEY or RESEND_API in your environment.");
-    }
+export async function sendVerificationEmail(
+  email: string,
+  token: string,
+  emailType: MailTypes
+) {
+  const resendApiKey =
+    process.env.RESEND_API_KEY || process.env.RESEND_API;
 
-    const resend = new Resend(resendApiKey);
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-    const verifyToken = randomBytes(32).toString("hex");
-    const userDetail = await User.findById(_id);
-    if (!userDetail) {
-        throw new Error("User not found");
-    }
+  if (!resendApiKey) {
+    throw new Error("Missing Resend API key");
+  }
 
-    userDetail.verifyToken = verifyToken;
-    userDetail.verifyTokenExpire = new Date(Date.now() + 3600000);
-    await userDetail.save();
+  const resend = new Resend(resendApiKey);
 
-    const verifyUrl = `${appUrl}/verify-email?token=${encodeURIComponent(verifyToken)}`;
-    const data = await resend.emails.send({
-        from: process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev",
-        to: email,
-        subject: "Verify Your Email",
-        html: `
-            <h2>Email Verification</h2>
-            <p>Click the link below to verify your account:</p>
-            <a href="${verifyUrl}">Verify Email</a>
-        `,
-        text: `Verify your email by visiting ${verifyUrl}`,
-    });
+  const appUrl =
+    process.env.NEXT_PUBLIC_APP_URL ||
+    "http://localhost:3000";
 
-    return data;
+  const url =
+    emailType === MailTypes.VERIFICATION_EMAIL
+      ? `${appUrl}/verify-email?token=${encodeURIComponent(token)}`
+      : `${appUrl}/reset-password?token=${encodeURIComponent(token)}`;
+
+  const subject =
+    emailType === MailTypes.VERIFICATION_EMAIL
+      ? "Verify Your Email"
+      : "Reset Your Password";
+
+  const html =
+    emailType === MailTypes.VERIFICATION_EMAIL
+      ? `
+        <h2>Email Verification</h2>
+        <p>Click the link below to verify your account:</p>
+        <a href="${url}">Verify Email</a>
+      `
+      : `
+        <h2>Reset Password</h2>
+        <p>Click the link below to reset your password:</p>
+        <a href="${url}">Reset Password</a>
+      `;
+
+  const data = await resend.emails.send({
+    from:
+      process.env.RESEND_FROM_EMAIL ||
+      "onboarding@resend.dev",
+    to: email,
+    subject,
+    html,
+    text:
+      emailType === MailTypes.VERIFICATION_EMAIL
+        ? `Verify your email by visiting ${url}`
+        : `Reset your password by visiting ${url}`,
+  });
+
+  return data;
 }
