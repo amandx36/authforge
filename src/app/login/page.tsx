@@ -12,6 +12,7 @@ export default function LoginPage() {
 const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading , setloading] = useState(false);
 
   const  handleLogin =  async () => {
     console.log("Email:", email);
@@ -20,6 +21,7 @@ const router = useRouter();
 
     // API call
     try{
+      setloading(true);
       const response = await axios.post(
         "/api/users/login",{
           email,
@@ -27,7 +29,12 @@ const router = useRouter();
         }
       )
       console.log(response.data);
-      router.push("/profile")
+      if(response.data.role==="ADMIN"){
+        router.push("/admin/dashboard")
+      }
+      else{
+        router.push("/profile")
+      }
       
 
     }
@@ -36,6 +43,9 @@ const router = useRouter();
       console.log(error);
       
 
+    }
+    finally{
+      setloading(false);
     }
   };
 
@@ -72,14 +82,19 @@ const router = useRouter();
         </div>
 
         <button
-          className="btn btn-primary w-100 mb-3"
-          onClick={handleLogin}
+       disabled={loading}
+        className="btn btn-primary w-100 mb-3"
+     onClick={handleLogin}
         >
-          Login
+       {loading ? "Logging In..." : "Login"}
         </button>
 
         <Link href="/signup" className="btn btn-success w-100">
           Create Account 
+        </Link>
+        <br />
+        <Link href="/forgot-password">
+          Forgot Password?
         </Link>
 
       </div>

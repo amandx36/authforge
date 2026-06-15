@@ -1,10 +1,17 @@
 
+import { UserRole } from "@/helper/enums";
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
+    },
+    role:{
+        type : String,
+        enum: Object.values(UserRole),
+        default : UserRole.USER
+        
     },
     email: {
         type: String,

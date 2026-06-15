@@ -42,11 +42,19 @@ export async function POST(request: NextRequest) {
         }
       );
     }
+    if(!user.isVerified){
+      return NextResponse.json({
+        error :"Please verify your email first"
+      },{
+        status : 400,
+      })
+    }
 
     const tokenData = {
       id: user._id,
       email: user.email,
       username: user.username,
+      role :user.role
     };
 
     const token = jwt.sign(
@@ -60,6 +68,7 @@ export async function POST(request: NextRequest) {
     const response = NextResponse.json({
       message: "Login successful",
       success: true,
+      role : user.role,
     });
 
     response.cookies.set("token", token, {
