@@ -1,58 +1,84 @@
+"use client"
 import axios from "axios";
 import {  useState } from "react"
+import { useSearchParams,useRouter } from "next/navigation";
 export default function ResetPassword(){
     const [password,setPassword] = useState("");
     const [confirmPassword,setConfirmPassword] = useState("");
-    const 
+    const [loading,setloading] = useState(false);
+    const searchParams = useSearchParams();
+    const  token = searchParams.get("token");
+    const router = useRouter();
+    
+const handleResetPassword = async (
+  e: React.FormEvent
+) => {
+  e.preventDefault();
 
-    const handleResetPassword = async  (e : React.FormEvent) =>{e.preventDefault();
-
-        if (password != confirmPassword){
-        alert("Password did not match ")
-        return 
+  if (password !== confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
+  if(!token){
+      alert("Invalid reset link ")
+      return ;
     }
-    try{
-        const response = await axios.post(
-        "/api/users/login",{
-          password
-        }  
-      )
-      if(!response){
-        console.log("Something went wrong");
-        return 
+
+  try {
+    setloading(true);
+    
+
+    const response = await axios.post(
+      "/api/users/reset-password",
+      { 
+        token,
+        password
       }
-      console.log(response)
+    );
 
-    }
-    catch(error){
-        console.log(error);
-        console.log("Something went ")
+    console.log(response.data);
+    alert("password updated successfully redirecting to log in ")
+    router.push("/login")
 
-    }
-        
-    }
+  } catch (error) {
+    console.log(error);
 
-    
-    
-    return (
+  } finally {
+    setloading(false);
+  }
+};
+
+return (
         <>
         <h1>Welcome to reset password</h1>
         <div>
        <form onSubmit={handleResetPassword}>
 
-             <input type="password"
+        <input type="password"
             placeholder="Enter a new Password"
              value={password}
             onChange={(e)=>setPassword(e.target.value)}
             />
-
-            <input type="password"
+        <br/>
+        <br/>
+        
+        <input type="password"
         placeholder="Enter your password again"
         value={confirmPassword}
         onChange={(e)=>setConfirmPassword(e.target.value)}
         />
-        
+        <br/>
+        <br/>
+       <button 
+       type="submit"
+       disabled={loading}
+       >
 
+        {loading
+        ?"Updating"
+        :"Reset Password "}
+
+       </button>
 
 
        </form>
