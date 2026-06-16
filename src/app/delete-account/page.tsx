@@ -29,14 +29,16 @@ export default function DeleteAccount() {
         toast.error("Password is required");
         return;
       }
-
-      const res = await axios.post(
-        "/api/users/delete-account",
-        {
+      
+      const res = await axios.delete(
+        "/api/users/delete-account",  {
+        data: {
           password,
-        }
+        },
+      }
       );
 
+      console.log(res);
       toast.success(
         res.data.message || "Account deleted successfully"
       );
@@ -45,7 +47,8 @@ export default function DeleteAccount() {
       setConfirmation("");
 
       router.push("/login");
-    } catch (error: any) {
+    } 
+    catch (error: any) {
       console.error(error);
 
       toast.error(
