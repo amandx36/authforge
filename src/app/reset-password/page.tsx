@@ -57,7 +57,7 @@ return (
 
         <input type="password"
             placeholder="Enter a new Password"
-             value={password}
+                 value={password}
             onChange={(e)=>setPassword(e.target.value)}
             />
         <br/>
@@ -65,11 +65,11 @@ return (
         
         <input type="password"
         placeholder="Enter your password again"
-        value={confirmPassword}
+          value={confirmPassword}
         onChange={(e)=>setConfirmPassword(e.target.value)}
         />
         <br/>
-        <br/>
+         <br/>
        <button 
        type="submit"
        disabled={loading}

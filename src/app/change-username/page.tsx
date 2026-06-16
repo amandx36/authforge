@@ -13,7 +13,7 @@ export default function UpdateUsername() {
   ) => {
     e.preventDefault();
 
-    // update username logic here
+    
     const resp = await axios.post("/api/users/change-username",{
         username
     })
