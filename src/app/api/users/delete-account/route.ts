@@ -6,8 +6,9 @@ export  async   function DELETE(request: NextRequest) {
   try {
     const tokenData: any =  getDataFromToken(request);
     
-    const {Userpasswd} = await request.json();
-
+    const {password} = await request.json();
+    console.log("PASSWORD:", password);
+console.log("TOKEN:", tokenData);
 
     if (!tokenData?.id) {
               return  NextResponse.json(
@@ -29,7 +30,7 @@ export  async   function DELETE(request: NextRequest) {
         })
     }
    
-    const isSame = await bcrypt.compare(Userpasswd,user.password);
+    const isSame = await bcrypt.compare(password,user.password);
     if(!isSame){
         return NextResponse.json({
             message:"Password did not match",
