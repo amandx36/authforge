@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
 
     const decoded: any = jwt.verify(
       token,
-      process.env.JWT_SECRET!
+      process.env.TOKEN_SECRET!
     );
 
     const user = await User.findOne({
@@ -53,6 +53,7 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error: any) {
+    console.error("CHANGE USERNAME ERROR:", error);
     return NextResponse.json(
       {
         success: false,
