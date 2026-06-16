@@ -82,8 +82,8 @@ console.log(user);
 
 
         <button className="bg-red-500 text-white mx-auto mt-4 block px-4 py-2 rounded"  onClick={logOutHandler}>Log out</button>
-        <button onClick={()=> router.push("/change-password")}>Update Profile</button>
-        <button>Change Password</button>
+        <button onClick={()=> router.push("/change-password")}>Update Password</button>
+        <button>Update  Profile</button>
         <button>Delete Account</button>
 </div>
 

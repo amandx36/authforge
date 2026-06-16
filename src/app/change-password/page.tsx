@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function ChangePassword() {
+  const router = useRouter();
   const [oldPassword, setOldPassword] =
     useState("");
 
@@ -49,6 +51,9 @@ export default function ChangePassword() {
       setOldPassword("");
       setNewPassword("");
       setConfirmPassword("");
+      await axios.post("/api/users/logout");
+
+      router.push("/login")
 
     } catch (error: any) {
       console.log(error);
