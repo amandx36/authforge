@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation"
-
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
 
@@ -38,9 +38,14 @@ const router = useRouter();
       
 
     }
-    catch(error){
+    catch(error : any ){
       console.log("Error Occurred") ; 
       console.log(error);
+      toast.error(
+    error.response?.data?.error ||
+    error.response?.data?.message ||
+    "Login Failed"
+  );
       
 
     }
