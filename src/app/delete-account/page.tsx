@@ -78,14 +78,14 @@ export default function DeleteAccount() {
 
         .card-sub {
           font-size: 12px;
-          color: #444;
+          color: #dcd5d5;
           text-align: center;
           margin-bottom: 24px;
           letter-spacing: 0.03em;
         }
 
         .warn-box {
-          background: #1f0a0a;
+          background: #170303;
           border: 1px solid #450a0a;
           border-radius: 7px;
           padding: 12px 14px;
@@ -106,7 +106,7 @@ export default function DeleteAccount() {
         .input-label {
           display: block;
           font-size: 11px;
-          color: #555;
+          color: #f4f0f0;
           text-transform: uppercase;
           letter-spacing: 0.07em;
           margin-bottom: 6px;
@@ -114,7 +114,7 @@ export default function DeleteAccount() {
 
         .input-field {
           width: 100%;
-          background: #111;
+          background: #938686;
           border: 1px solid #2a2a2a;
           border-radius: 7px;
           padding: 11px 14px;
@@ -130,7 +130,7 @@ export default function DeleteAccount() {
         }
 
         .input-field::placeholder {
-          color: #333;
+          color: #c8c2c2;
         }
 
         .input-field:disabled {
@@ -140,7 +140,7 @@ export default function DeleteAccount() {
 
         .end-hint {
           font-size: 11px;
-          color: #444;
+          color: #e2dddd;
           margin-top: 5px;
         }
 
@@ -180,7 +180,7 @@ export default function DeleteAccount() {
           text-align: center;
           margin-top: 18px;
           font-size: 12px;
-          color: #444;
+          color: #efe8e8;
           cursor: pointer;
           transition: color 0.15s;
         }
