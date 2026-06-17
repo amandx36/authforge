@@ -2,6 +2,7 @@ import { getDataFromToken } from "@/helper/getDataFromToken";
 import User from "@/model/userModal";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import cloudinary from "@/helper/cloudinary";
 export  async   function DELETE(request: NextRequest) {
   try {
     const tokenData: any =  getDataFromToken(request);
@@ -55,7 +56,7 @@ console.log("TOKEN:", tokenData);
       const response = NextResponse.json(
       {
         success: true,
-        message: "user deleted",
+        message: "user deleted with all credentials",
          },
       {
         status: 200,
@@ -68,6 +69,10 @@ console.log("TOKEN:", tokenData);
         path: "/",
       httpOnly: true,
     });
+
+    if(user.profileImageId){
+      await cloudinary.uploader.destroy(user.profileImageId);
+    }
 
     return response;
   } catch (error: any) {
