@@ -29,6 +29,11 @@ export async function POST( request: NextRequest) {
     console.log( "Converted to Buffer");
         console.log(buffer.length);
     
+    if(buffer.length>5 * 1024 * 1024){
+      return NextResponse.json({
+        error :"Max 5 MB allowed "
+      })
+    }
     console.log("cloudinary name "+process.env.CLOUDINARY_CLOUD_NAME)
     // uploading file as per documentation in cloudinary 
   const result: any =
@@ -70,7 +75,11 @@ export async function POST( request: NextRequest) {
     },{
         status:404
     })
-}
+} 
+    // if already 
+    if(user.profileImageId){
+      await cloudinary.uploader.destroy(user.profileImageId);
+    }
     user.profileImage = result.secure_url
     user.profileImageId = result.public_id
     await user.save();

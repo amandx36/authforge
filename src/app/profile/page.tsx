@@ -48,11 +48,17 @@ try{
         toast.error("Select the file first");
         return 
     }
+    if(file.size>5 * 1024 * 1024 ){
+        toast.error("Max 5MB allowed");
+    return;
+    }
     // now send formData object and send to backend 
     const formData = new FormData();
     formData.append("image",file);
     console.log(formData);
-    const response = await axios.post("api/users/upload-profile",formData)
+    const response = await axios.post("/api/users/upload-profile",formData)
+    await getUserDetail()
+    setFile(null)
     console.log(response.data);
     toast.success("Profile  picture  sent successfully")
 
@@ -89,6 +95,14 @@ console.log(user);
 
         
 <div className="container mt-5">
+    {user?.profileImage && (
+<img
+  src={user.profileImage}
+  alt="Profile"
+  width="150"
+  height="150"
+/>
+)}
     <div className="card p-4 shadow">
         <h1 className="mb-4">Profile</h1>
 
