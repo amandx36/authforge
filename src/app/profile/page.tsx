@@ -3,6 +3,7 @@
 import { useState , useEffect} from "react"
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 
 type User = {
@@ -14,7 +15,10 @@ type User = {
 export default function Profile (){
     const router = useRouter();
      
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = 
+        useState<User | null>(null);
+    const [file, setFile] =
+        useState<File | null>(null);
 
    
     const getUserDetail= async ()=>{
@@ -38,6 +42,30 @@ export default function Profile (){
         getUserDetail();
     },[]);
 
+const updateProfilePicture = async ()=>{
+try{
+    if(!file){
+        toast.error("Select the file first");
+        return 
+    }
+    // now send formData object and send to backend 
+    const formData = new FormData();
+    formData.append("image",file);
+    console.log(formData);
+    const response = await axios.post("api/users/upload-profile",formData)
+    console.log(response.data);
+    toast.success("Profile  picture  sent successfully")
+
+}   
+catch(error:any){
+    console.log(error)
+    toast.error("Error in uploading file")
+    return ;
+
+} 
+    
+}
+
 
 const logOutHandler  = async  ()=>{
     try{
@@ -56,6 +84,7 @@ const logOutHandler  = async  ()=>{
 
 
 console.log(user);
+
     return (
 
         
@@ -79,9 +108,30 @@ console.log(user);
             {user?.isAdmin ? "Yes" : "No"}
         </p>
     </div>
+   <div>
+
+
+  {/* Taking the Profile image  */}
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) => {
+      const selectedFile =
+        e.target.files?.[0];
+
+      console.log(selectedFile);
+
+      if (selectedFile) {
+        setFile(selectedFile);
+      }
+    }}
+  />
+</div>
 
 
         <button className="bg-red-500 text-white mx-auto mt-4 block px-4 py-2 rounded"  onClick={logOutHandler}>Log out</button>
+        <button onClick={updateProfilePicture}>Update Profile Picture</button>
         <button onClick={()=> router.push("/change-password")}>Update Password</button>
         <button onClick={()=>{router.push("/change-username")}}>Update  username</button>
         <button onClick={()=>{router.push("/delete-account")}}>Delete Account</button>
