@@ -325,6 +325,9 @@ export  default function Profile() {
             <button className="btn-action" onClick={() => router.push("/delete-account")}>
                    Delete Account
              </button>
+              <button className="btn-action" onClick={() => router.push("/forgot-password")}>
+                   Forgot Password
+             </button>
           </div>
 
           <button className="btn-logout" onClick={logOutHandler}>
