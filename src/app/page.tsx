@@ -3,12 +3,12 @@ import Link from "next/link";
 export default function HomePage() {
   return (
     <>
-      <style>{`
-        .bg-dark {
+         <style>{`
+         .bg-dark {
           background-color: #0d0d0d ;
         }
 
-        .hero-box {
+         .hero-box {
           background: #161616;
           border: 1px solid #222;
           border-radius: 14px;
@@ -23,7 +23,7 @@ export default function HomePage() {
           display: block;
         }
 
-        h1 {
+         h1 {
           font-size: 2rem;
           font-weight: 700;
           color: #84ff00;
@@ -37,7 +37,7 @@ export default function HomePage() {
           margin-bottom: 32px;
         }
 
-        .btn-primary {
+          .btn-primary {
           background-color: #00e5f5;
           border: none;
           color: #0d0d0d;
@@ -56,7 +56,7 @@ export default function HomePage() {
           background-color: transparent;
           border: 1px solid #22c55e;
           color: #22c55e;
-          font-weight: 600;
+            font-weight: 600;
           padding: 12px 30px;
           border-radius: 7px;
           font-size: 15px;
@@ -81,12 +81,12 @@ export default function HomePage() {
       `}</style>
 
       <div className="container-fluid bg-dark text-white min-vh-100 d-flex justify-content-center align-items-center">
-        <div className="text-center hero-box">
+         <div className="text-center hero-box">
 
-          <span className="lock-icon"></span>
+           <span className="lock-icon"></span>
 
           <h1 className="display-3 fw-bold mb-4">
-            <u>Authentication System</u>
+              <u>Authentication System</u>
           </h1>
           <p className="lead mb-5">
             Secure Login and Signup using Next.js
@@ -97,17 +97,17 @@ export default function HomePage() {
                 Login
               </button>
             </Link>
-            <Link href="/signup">
+             <Link href="/signup">
               <button className="btn btn-success btn-lg">
                 Signup
-              </button>
+               </button>
             </Link>
-          </div>
+            </div>
 
           <p className="footer-text">Built with <span>Next.js</span> · JWT · Bcrypt</p>
 
         </div>
-      </div>
+           </div>
     </>
   );
 }
