@@ -10,13 +10,18 @@ export const config = {
     "/login",
     "/signup",
     "/verify-email",
+    "/forgot-password",
+"/reset-password",
   ],
 };
 
 const publicRoutes = [
+  "/",
   "/login",
   "/signup",
   "/verify-email",
+  "/forgot-password",
+  "/reset-password",
 ];
 
 export async function middleware(

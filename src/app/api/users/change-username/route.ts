@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/model/userModal";
-import connect from "@/app/dbConfig/dbConfig";
+import {connect} from "@/app/dbConfig/dbConfig";
 import jwt from "jsonwebtoken";
 
 export async function POST(request: NextRequest) {

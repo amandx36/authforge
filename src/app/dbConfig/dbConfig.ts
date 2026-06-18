@@ -1,25 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-export default function connect(){
-    try {
-        mongoose.connect(process.env.MONGO_URL!);
-        const connection = mongoose.connection;
-        connection.on('connected',()=>{
-            console.log("Connected to data base ");
+export async function connect() {
+  try {
 
-        })
-        connection.on('error',(er)=>{
-            console.log("Error  in connection",er)
-            // now exit the connection 
-            process.exit();
-
-        })
-
-  
-    } catch (error) {
-        console.log("Some went wrong in connection to the mongo server ")
-        console.log(error)
+    if (mongoose.connection.readyState === 1) {
+      return;
     }
-}
 
-export {connect};
+    await mongoose.connect(process.env.MONGO_URL!);
+
+    console.log("MongoDB Connected");
+
+  } catch (error) {
+    console.log("MongoDB Connection Error");
+    console.log(error);
+    throw error;
+  }
+}
