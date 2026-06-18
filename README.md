@@ -68,27 +68,25 @@ The application solves the critical need for secure user authentication and auth
 ---
 
 ## Screenshots
-
+![alt text](image.png)
 ### Login Page
-[Add Screenshot Here]
+![alt text](image-1.png)
 
 ### Signup Page
-[Add Screenshot Here]
+![alt text](image-2.png)
 
-### Email Verification Page
-[Add Screenshot Here]
+### Email Verification Page with Wrong Email
+![alt text](image-3.png)
 
 ### User Profile Dashboard
-[Add Screenshot Here]
+![alt text](image-4.png)
 
 ### Forgot Password Page
-[Add Screenshot Here]
+![alt text](image-5.png)
 
 ### Change Password Page
-[Add Screenshot Here]
+![alt text](image-6.png)
 
-### Admin Dashboard
-[Add Screenshot Here]
 
 ---
 
