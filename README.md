@@ -12,6 +12,12 @@ The application solves the critical need for secure user authentication and auth
 
 ---
 
+# Live Demo
+
+Production URL: https://authforge-opal.vercel.app
+https://authforge-opal.vercel.app/
+
+
 ## Key Features
 
 ### Authentication
